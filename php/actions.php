@@ -1,13 +1,31 @@
 <?php
 
+
+// ---------------------------------------------------------------------------------
+// Original (local) code (prior to integration with Heroku)
+// ---------------------------------------------------------------------------------
+/*
 // These are my login credentials for the database.
 $servername = "localhost";
 $username = "mydb";
 $password = "mydb";
 $dbname = "mydb";
-
 // Create connection.
 $conn = new mysqli($servername, $username, $password, $dbname);
+*/
+// ---------------------------------------------------------------------------------
+
+
+// ---------------------------------------------------------------------------------
+// https://devcenter.heroku.com/articles/cleardb#using-cleardb-with-php
+// ---------------------------------------------------------------------------------
+$url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+$server = $url["host"];
+$username = $url["user"];
+$password = $url["pass"];
+$db = substr($url["path"], 1);
+$conn = new mysqli($server, $username, $password, $db);
+// ---------------------------------------------------------------------------------
 
 // Check connection.
 if ($conn->connect_error) {
